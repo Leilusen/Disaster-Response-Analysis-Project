@@ -1,7 +1,9 @@
 # Disaster response analysis
-Web application designed to analyze and label messages received by the disaster response hub. 
+Web application designed to analyze and label messages received by the disaster response hub.
+
 There are 36 categories in total, however due to absence of any messages related to "Child alone" category in the training dataset, we removed this category from our analysis.
-The dataset is heavily imbalanced. We used multioutput classifier in our pipeline. As a future improvement, some kind of SMOTE for multioutput could be used to improve classification.
+
+The dataset is heavily imbalanced. We used multioutput classifier in our pipeline. SMOTE for multioutput could be used to further improve classification.
 ### Files in the repository:
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
