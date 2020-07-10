@@ -14,7 +14,6 @@ from plotly.graph_objs import Bar
 import plotly.figure_factory as ff
 
 from sklearn.externals import joblib
-from sqlalchemy import create_engine
 import sqlite3
 
 app = Flask(__name__)
