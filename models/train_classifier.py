@@ -25,12 +25,30 @@ from custom_transformer import CustomTransformer
 from custom_transformer import tokenize
 
 def display_results(y_test, y_pred, categories):
+    '''
+    Function for displaying results of classification
+    Parameters:
+    y_test - true test dataset labels
+    y_pred - predicted test dataset labels
+    categories - list of category names
+    Returns:
+    None
+    
+    '''
     for i, cat in enumerate(categories):
         print('{}: \n'.format(cat))
         #print('{}: \n'.format(df[[col for col in df.columns[4:]]].columns[i]))
         print(classification_report(y_test[:,i],y_pred[:,i]))
         
 def load_data(database_filepath):
+     '''
+    Function for loading train data from SQLite database
+    Parameters:
+    Database directory
+    Returns:
+    X, Y dataframes and category names
+    
+    '''
     con = sqlite3.connect(database_filepath)
     df = pd.read_sql_query("SELECT * from messages", con)
     X = df['message'].values
@@ -40,6 +58,14 @@ def load_data(database_filepath):
     return X, Y, categories
 
 def build_model():
+     '''
+    Function for implementing grid-search for ML pipeline
+    Parameters:
+    None
+    Returns:
+    Optimal model
+    
+    '''
     pipeline = Pipeline([
         ('features', FeatureUnion([
 
