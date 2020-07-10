@@ -3,6 +3,14 @@ import pandas as pd
 import sqlite3
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    Function for loading data from specified directories
+    Parameters:
+    Messages and categories files' directories
+    Returns:
+    Combined dataframe
+    
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories, left_index=True,right_index=True)
@@ -12,6 +20,14 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+    Function for cleaning data and preparing it for analysis
+    Parameters:
+    Dataframe containing messages and their corresponding categories
+    Returns:
+    Cleaned dataframe
+    
+    '''
    # create a dataframe of the 36 individual category columns
 
     categories = df.categories.str.split(';', expand = True)
@@ -41,6 +57,14 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+    Function for saving data into SQLite database
+    Parameters:
+    Dataframe and database directory
+    Returns:
+    None
+    
+    '''
     # loading to the database
     conn = sqlite3.connect(database_filename)
     
