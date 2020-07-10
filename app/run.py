@@ -7,7 +7,6 @@ sys.path.append("/home/workspace/models")
 
 from custom_transformer import CustomTransformer
 from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
@@ -20,16 +19,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-def tokenize(text):
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
 
 # load data
 con = sqlite3.connect('data/DisasterResponse.db')
@@ -45,6 +34,7 @@ model = joblib.load("models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
+    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     genre_sum = df.groupby('genre').sum()
@@ -53,11 +43,12 @@ def index():
     social_freq = df[df.genre == 'social'][[col for col in df.columns if col not in ['message','original','genre','id']]].sum(axis=1)
     direct_freq = df[df.genre == 'direct'][[col for col in df.columns if col not in ['message','original','genre','id']]].sum(axis=1)
     news_freq = df[df.genre == 'news'][[col for col in df.columns if col not in ['message','original','genre','id']]].sum(axis=1)
-    
     # create visuals
+    
     hist_data = [direct_freq, news_freq, social_freq]
     group_labels = ['Direct','News','Social']
     fig = ff.create_distplot(hist_data, group_labels, show_hist=False)
+    #fig.update_layout(title_text='Distribution of Number of Labels per Message')
     fig.update(layout=dict(title=dict(text='Distribution of Number of Labels per Message', x=0.5)))
     freq_graph = fig.to_dict()
     
