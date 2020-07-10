@@ -12,6 +12,14 @@ import pandas as pd
 import re
 
 def tokenize(text):
+    '''
+    Function for tokenizing text data
+    Parameters:
+    Text message
+    Returns:
+    Tokenized data
+    
+    '''
     stop_words = nltk.corpus.stopwords.words('english')
 
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
@@ -30,6 +38,15 @@ def tokenize(text):
     return clean_tokens
 
 class CustomTransformer(BaseEstimator, TransformerMixin):
+    '''
+    Class for transforming tokenized data into dataframe of new features 
+    that can be fed into the model
+    Parameters:
+    BaseEstimator and TransformerMixin classes
+    Returns:
+    Pandas dataframe containing new features
+    
+    '''
 
     def starting_verb(self, text):
         # tokenize by sentences
